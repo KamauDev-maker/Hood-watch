@@ -24,7 +24,7 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
-
+@login_required(login_url='login')
 def hoodsView (request):
     all_hoods =  Neighborhood.objects.all()
     all_hoods = all_hoods[::-1]
@@ -34,6 +34,7 @@ def hoodsView (request):
     
     return render(request, 'all_hoods.html',context)
 
+@login_required(login_url='login')
 def newHood (request):
     if request.method == 'POST':
         form = NeighbourHoodForm(request.POST, request.FILES)
@@ -48,28 +49,32 @@ def newHood (request):
 
    
 
-
+@login_required(login_url='login')
 def hoodMembership (request,hood_id):   
     hood = Neighborhood.objects.get(id=hood_id)
     members =Profile.objects.filter(neighbourhood=hood).all()
     return render(request, 'members.html',{'members':members})
 
+
+@login_required(login_url='login')
 def join_hood(request,id):
     neighbourhood =get_object_or_404(neighbourhood,id=id)
     request.user.profile.neighbourhood =neighbourhood
     requst.user.profile.save()
     return redirect('hood')
 
+@login_required(login_url='login')
 def profile(request,username):
     return render(request, 'profile.html')
 
+@login_required(login_url='login')
 def edit_profile(request,username):
     use = User.objects.get(username=username)
     if request.method == 'POST':
         return redirect('profile',user.username)
     return render(request, 'editprofile.html')
 
-
+@login_required(login_url='login')
 def add_amenity(request,hood_id):
     hood = NeighbourHood.objects.get(id=hood_id)
     business = Business.objects.filter(neighbourhood=hood)
@@ -93,6 +98,8 @@ def add_amenity(request,hood_id):
     }
     return render(request, 'add_amenity.html', params)
 
+
+@login_required(login_url='login')
 def create_post(request,hood_id):
     hood = NeighbourHood.objects.get(id=hood_id)
     if request.method == 'POST':
@@ -108,7 +115,7 @@ def create_post(request,hood_id):
     return render(request, 'post.html', {'form': form})
 
 
-
+@login_required(login_url='login')
 def search_business(request):
     if request.method == 'GET':
         name = request.GET.get("title")
@@ -124,6 +131,7 @@ def search_business(request):
         message = "You haven't searched for any image category"
     return render(request, "results.html")
 
+@login_required(login_url='login')
 def leave_hood(request, id):
     hood = get_object_or_404(NeighbourHood, id=id)
     request.user.profile.neighbourhood = None
