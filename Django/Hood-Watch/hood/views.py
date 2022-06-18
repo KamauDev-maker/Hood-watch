@@ -1,10 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django .forms import SignUpForm,BusinessForm,UpdateProfileForm,NeighbourHoodForm,PostForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .models import NeighbourHood,Profile,Business,Post
 from django.contrib.auth.models import User
-
+from .forms import UpdateProfileForm, NeighbourHoodForm,SignupForm,BusinessForm,PostForm
 
 # Create your views here.
 
@@ -24,6 +23,8 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
 @login_required(login_url='login')
 def hoodsView (request):
     all_hoods =  Neighborhood.objects.all()
