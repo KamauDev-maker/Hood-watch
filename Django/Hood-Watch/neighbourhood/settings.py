@@ -37,7 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hood',
+    'pyuploadcare.dj',
 ]
+
+UPLOADCARE = {
+    'pub_key': '1d111b4d2405fb153a7c',
+    'secret': 'b04f667af46742f1ecc1e736',
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -117,7 +125,26 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = 'images/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static/'
+]
+
+MEDIA_ROOT = BASE_DIR / 'static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_REDIRECT_URL = 'index'
+
+LOGOUT_REDIRECT_URL = 'index'
