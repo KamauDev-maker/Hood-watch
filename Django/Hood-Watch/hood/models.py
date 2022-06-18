@@ -6,13 +6,13 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 
-class Neighborhood(models.Model):
+class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=100)
     admin = models.ForeignKey("Profile",on_delete=models.CASCADE,related_name='hood')
     decription = models.TextField()
-    emergency = models.IntegerField(null=True)
-    police_number = models.IntegerField(null=true, blank=True)
+    emergency = models.IntegerField(null=True,blank=True)
+    police_number = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
         return f'{self.name} hood'
@@ -33,7 +33,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=255, blank=True)
     profile_image = models.ImageField(upload_to='images/',default='default.png')
     location = models.CharField(max_length=50, blank=True, null=True)
-    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.SET_NULL, null=true)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, null=True, related_name='members', blank=True)
      
     def __str__(self):
             return f'{self.user.username} profile'
